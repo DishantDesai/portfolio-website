@@ -1,50 +1,53 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages # Name of the workflow as it appears in the GitHub Actions tab
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [ main ] # Trigger the workflow whenever code is pushed to the 'main' branch
+  workflow_dispatch: # Allows you to manually trigger this workflow from the GitHub UI
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: read # Permission to download/read the repository content
+  pages: write # Permission to upload and publish to GitHub Pages
+  id-token: write # Required for secure authentication with GitHub Pages
 
+# Prevent multiple deployments from running at the same time for the same branch
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
 jobs:
+  # Job 1: Build the project
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # The virtual environment (server) where the job runs
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # Downloads your code from the repository to the runner
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4 # Installs Node.js on the runner
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: 20 # Specific version of Node.js to use
+          cache: 'npm' # Caches dependencies to make future runs faster
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci # 'Clean Install' - installs exactly what's in your package-lock.json
 
       - name: Build
-        run: npm run build
+        run: npm run build # Runs your Vite build command to generate the 'dist' folder
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v3 # Saves the 'dist' folder as a package for the next job
         with:
-          path: ./dist
+          path: ./dist # The folder created by 'npm run build'
 
+  # Job 2: Deploy the built files
   deploy:
     environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
+      name: github-pages # Links the job to the GitHub Pages environment
+      url: ${{ steps.deployment.outputs.page_url }} # The URL where your site will be live
+    needs: build # 👈 IMPORTANT: This job only runs if the 'build' job completes successfully
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v4 # Takes the uploaded artifact and publishes it to the web

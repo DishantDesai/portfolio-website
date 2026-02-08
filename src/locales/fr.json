@@ -1,0 +1,41 @@
+{
+  "nav": {
+    "about": "À Propos",
+    "experience": "Expérience",
+    "skills": "Compétences",
+    "projects": "Projets",
+    "education": "Éducation",
+    "contact": "Contact"
+  },
+  "hero": {
+    "role": "Développeur Frontend",
+    "greeting": "Salut, je suis",
+    "description": "Création d'applications web évolutives et performantes axées sur l'architecture React moderne et l'expérience utilisateur.",
+    "viewProjects": "Voir Projets",
+    "contactMe": "Contactez-moi"
+  },
+  "about": {
+    "title": "À Propos de moi"
+  },
+  "experience": {
+    "title": "Expérience"
+  },
+  "skills": {
+    "title": "Compétences Techniques"
+  },
+  "projects": {
+    "title": "Projets en Vedette"
+  },
+  "education": {
+    "title": "Éducation",
+    "gpa": "Moyenne"
+  },
+  "contact": {
+    "title": "Contactez-moi",
+    "description": "Je suis actuellement ouvert aux nouvelles opportunités. Que vous ayez une question ou que vous vouliez simplement dire bonjour, n'hésitez pas à nous contacter!",
+    "button": "Dire Bonjour"
+  },
+  "footer": {
+    "rights": "Tous droits réservés."
+  }
+}
